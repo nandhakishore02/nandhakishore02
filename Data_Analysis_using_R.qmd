@@ -1,0 +1,163 @@
+---
+title: "Data Analytics Using R"
+author: "Nandha Kishore G (23114)"
+format: html
+editor: visual
+---
+
+```{r}
+install.packages("ggplot2")
+library(ggplot2)
+
+```
+
+```{r}
+# Load the dataset
+Student_Performance <- read.csv("D:/r & python/students data/Student_Performance.csv")
+```
+
+```{r}
+Student_Performance <- read.csv("D:/r & python/students data/Student_Performance.csv")
+```
+
+```{r}
+# Build the multiple linear regression model
+model <- lm(Performance.Index ~ Hours.Studied + Previous.Scores + Extracurricular.Activities, data = Student_Performance)
+
+# Print the summary of the model
+summary(model)
+```
+
+```{r}
+# Check assumptions and diagnostic plots
+plot(model)
+```
+
+```{r}
+# Check variable significance
+summary(model)$coefficients
+```
+
+```{r}
+# Check multicollinearity
+vif <- car::vif(model)
+correlation_matrix <- cor(Student_Performance[, -c(3)])
+```
+
+```{r}
+# Plot residuals vs fitted values
+plot(model, which = 1)
+```
+
+```{r}
+
+```
+
+```{r}
+# Create ggplot for Hours.Studied
+ggplot(Student_Performance, aes(x = Hours.Studied, y = Performance.Index)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Hours Studied vs Performance Index")
+  
+```
+
+```{r}
+# Create ggplot for Previous.Scores
+ggplot(Student_Performance, aes(x = Previous.Scores, y = Performance.Index)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Previous Scores vs Performance Index")
+```
+
+```{r}
+# Create ggplot for Extracurricular.Activities
+ggplot(Student_Performance, aes(x = Extracurricular.Activities, y = Performance.Index)) +
+  geom_boxplot() +
+  labs(title = "Extracurricular Activities vs Performance Index")
+```
+
+```{r}
+# Create ggplot for Sleep.Hours
+ggplot(Student_Performance, aes(x = Sleep.Hours, y = Performance.Index)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Sleep Hours vs Performance Index")
+
+```
+
+```{r}
+# Create ggplot for Sample.Question.Papers.Practiced
+ggplot(Student_Performance, aes(x = Sample.Question.Papers.Practiced, y = Performance.Index)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Sample Question Papers Practiced vs Performance Index")
+```
+
+```{r}
+# Assume you have new data for prediction
+new_data <- data.frame(
+  Hours.Studied = c(6, 8, 5),
+  Previous.Scores = c(70, 85, 60),
+  Extracurricular.Activities = c("Yes", "Yes", "No"),
+  Sleep.Hours = c(7, 9, 6),
+  Sample.Question.Papers.Practiced = c(3, 5, 2)
+)
+```
+
+```{r}
+# Make predictions
+predictions <- predict(model, newdata = new_data)
+```
+
+```{r}
+print(predictions)
+```
+
+```{r}
+# Extract coefficient values from the model summary
+coefficients <- coef(summary(model))
+
+# Print the coefficients
+print(coefficients)
+```
+
+## Model Interpretation
+
+### Coefficients Interpretation
+
+The coefficients of the regression model represent the change in the response variable Performance Index
+
+-   **Hours Studied**: For each additional hour studied, the Performance Index is expected to increase by 2.85 units.
+-   **Previous Scores**: For each additional point in previous scores, the Performance Index is expected to increase by 1.01 units.
+-   **Extracurricular Activities (Yes)**: Compared to students not participating in extracurricular activities, students who participate are expected to have a 0.59 increase in Performance Index.
+
+### Practical Interpretation
+
+-   Increasing the number of hours studied is associated with improved performance, indicating the importance of study time.
+-   Higher previous scores correlate with higher performance in the current exam.
+-   Participation in extracurricular activities is associated with a negative impact on performance.
+
+These interpretations provide insights into the factors influencing student performance and can guide educational strategies and interventions.
+
+## Conclusion
+
+### Summary of Findings
+
+In this analysis, we explored the relationship between various predictor variables and student performance. The multiple linear regression model revealed several important insights:
+
+-   **Hours Studied**: A positive association was found between the number of hours studied and student performance, highlighting the importance of dedicated study time.
+-   **Previous Scores**: Higher previous scores were associated with better performance in the current exam, indicating the continuity of academic achievement.
+-   **Extracurricular Activities**: Participation in extracurricular activities showed a positive impact on student performance, suggesting the holistic benefits of student engagement beyond academics.
+
+### Practical Implications
+
+The findings of this analysis have several practical implications for educational institutions, educators, and students:
+
+-   **Educational Strategies**: Insights from the regression analysis can inform the development of effective educational strategies focused on optimizing study time, leveraging previous achievements, and promoting holistic student engagement.
+-   **Test Preparation Strategies**: Implementing test preparation strategies, such as regular practice exams, can enhance student readiness and confidence for assessments.
+-   **Individualized Support**: Tailoring interventions and support mechanisms to address individual student needs can foster a more inclusive and supportive learning environment.
+
+### Closing Remarks
+
+In conclusion, this regression analysis contributes to our understanding of the multifaceted factors influencing student performance. By translating insights into actionable strategies and initiatives, educational stakeholders can work towards creating a supportive and enriching learning environment that nurtures the academic success and well-being of all students.
